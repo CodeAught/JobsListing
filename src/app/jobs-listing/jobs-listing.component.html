@@ -1,0 +1,53 @@
+<div class="parent">
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter()" placeholder="Search by experience (years)" [(ngModel)]="expVal">
+    <button mat-button *ngIf="expVal" matSuffix mat-icon-button aria-label="Clear" (click)="clear('exp')">
+      <mat-icon>X</mat-icon>
+    </button>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter()" placeholder="Search by location" [(ngModel)]="locVal">
+    <button mat-button *ngIf="locVal" matSuffix mat-icon-button aria-label="Clear" (click)="clear('loc')">
+      <mat-icon>X</mat-icon>
+    </button>
+  </mat-form-field>
+  <mat-form-field align="center">
+    <input matInput (keyup)="applyFilter()" placeholder="Search by skills" [(ngModel)]="skillsVal">
+    <button mat-button *ngIf="skillsVal" matSuffix mat-icon-button aria-label="Clear" (click)="clear('skill')">
+      <mat-icon>X</mat-icon>
+    </button>
+  </mat-form-field>
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <!-- Jobs Column -->
+    <ng-container matColumnDef="jobs">
+      <th mat-header-cell *matHeaderCellDef>JOBS</th>
+      <td mat-cell *matCellDef="let element">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>{{element.title}}</mat-card-title>
+            <mat-card-subtitle>{{element.companyname}}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <div>Exp: {{element.experience}}</div>
+            <div>Loc: {{element.location}}</div>
+            <div>Skills: {{element.skills}}</div>
+            <div>Salary: {{element.salary}}</div>
+            <div>Type: {{element.type | titlecase }}</div>
+            <div>
+              <p>Job Description:<br>{{element.jd}}</p>
+            </div>
+          </mat-card-content>
+          <mat-card-actions>
+            <a target="_blank" href="{{element.applylink}}">Apply</a>
+          </mat-card-actions>
+        </mat-card>
+      </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[10, 20, 50, 100, 500]" showFirstLastButtons></mat-paginator>
+</div>
